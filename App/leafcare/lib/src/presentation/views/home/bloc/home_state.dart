@@ -2,13 +2,21 @@
 part of 'home_bloc.dart';
 
 class HomeState {
+  HomeState();
+}
+
+class ImagePickState extends HomeState {}
+
+class ImagePickedState extends HomeState {
   List<File> images;
-  HomeState({
+  ImagePickedState({
     required this.images,
   });
 
-  HomeState copyWith({List<File>? images}) {
-    return HomeState(
+  ImagePickedState copyWith({
+    List<File>? images,
+  }) {
+    return ImagePickedState(
       images: images ?? this.images,
     );
   }

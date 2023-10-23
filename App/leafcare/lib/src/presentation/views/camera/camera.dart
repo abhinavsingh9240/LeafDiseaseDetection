@@ -2,8 +2,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:leafcare/src/presentation/pages/camera/bloc/camera_bloc.dart';
-import 'package:leafcare/src/presentation/pages/home/bloc/home_bloc.dart';
+import 'package:leafcare/src/presentation/views/camera/bloc/camera_bloc.dart';
+import 'package:leafcare/src/presentation/views/home/bloc/home_bloc.dart';
 
 
 class CameraPage extends StatefulWidget {

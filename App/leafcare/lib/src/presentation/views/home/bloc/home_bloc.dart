@@ -9,16 +9,12 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(HomeState(images: [])) {
+  HomeBloc() : super(HomeState()) {
     on<GetImageEvent>((event, emit) async {
-      
-      List<File> images = state.images;
-      // resizeImage(xf);
-      // File f = File(await cropImage(xf));
-      images.add(event.image);
-      emit(state.copyWith(images: images));
+      emit(ImagePickState());
+      emit(ImagePickedState(images: []));
     });
   }
 
-  // 
+  //
 }

@@ -5,9 +5,10 @@ abstract class HomeEvent {}
 
 class GetImageEvent extends HomeEvent {
   File image;
+
   GetImageEvent({
     required this.image,
   });
 }
 
-
+class PickImageFromGallery extends HomeEvent {}

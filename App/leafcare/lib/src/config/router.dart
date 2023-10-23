@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:leafcare/src/presentation/views/camera/bloc/camera_bloc.dart';
 import 'package:leafcare/src/presentation/views/camera/camera.dart';
 import 'package:leafcare/src/presentation/views/home/bloc/home_bloc.dart';
@@ -50,7 +51,33 @@ class BadRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: Container(
+        height: 500,
+        width: 375.w,
+        child: Column(
+          children: [
+            const Text('Something went wrong!'),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacementNamed(context, AppRouteStrings.home);
+              },
+              child: Container(
+                height: 45.h,
+                width: 180.w,
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: const Center(
+                  child: Text('Back to Home'),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

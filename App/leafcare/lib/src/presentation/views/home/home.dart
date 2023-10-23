@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +17,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
+        elevation: 0,
       ),
       drawer: Drawer(
         child: Column(
@@ -27,31 +26,36 @@ class _HomePageState extends State<HomePage> {
               height: 180.h,
               color: Colors.green,
             ),
-            drawerButton('Account', Icons.person),
+            // drawerButton('Account', Icons.person),
             drawerButton('Settings', Icons.settings),
             drawerButton('Feedback', Icons.feedback),
           ],
         ),
       ),
-      body: BlocConsumer<HomeBloc, HomeState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          List<File> images = [];
-          return Container(
+      body: Column(
+        children: [
+          BlocConsumer<HomeBloc, HomeState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is ImagePickedState) {
+                return Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  height: 375.w,
+                  width: 375.w,
+                  child: Image.file(state.image),
+                );
+              }
+              return Container();
+            },
+          ),
+          Container(
             width: 375.w,
-            // color: Colors.amber,
+            margin: const EdgeInsets.symmetric(vertical: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                (images.isNotEmpty)
-                    ? Container(
-                        height: 200,
-                        width: 200,
-                        child: Image.file(images.last),
-                      )
-                    : Container(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -63,7 +67,9 @@ class _HomePageState extends State<HomePage> {
                       Icons.camera_alt,
                     ),
                     getImage(
-                      () {},
+                      () {
+                        BlocProvider.of<HomeBloc>(context).add(PickImageFromGallery());
+                      },
                       ' Upload Picture',
                       Icons.upload,
                     )
@@ -71,8 +77,8 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

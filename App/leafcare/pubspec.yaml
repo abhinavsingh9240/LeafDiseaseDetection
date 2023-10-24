@@ -40,6 +40,8 @@ dependencies:
   camera: 
   image_cropper:
   image:  
+  flutter_screenutil: 
+  image_picker: 
 
 dev_dependencies:
   flutter_test:

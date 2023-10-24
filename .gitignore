@@ -2,3 +2,4 @@ venv
 image data
 archive.zip
 ./vscode
+/API/.venv

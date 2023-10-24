@@ -2,9 +2,6 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
-import 'package:image/image.dart' as IMG;
-import 'package:image_cropper/image_cropper.dart';
 import 'package:leafcare/src/utils/camera.dart';
 
 part 'camera_event.dart';

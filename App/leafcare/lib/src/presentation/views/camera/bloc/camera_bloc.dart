@@ -2,9 +2,6 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
-import 'package:image/image.dart' as IMG;
-import 'package:image_cropper/image_cropper.dart';
 import 'package:leafcare/src/utils/camera.dart';
 
 part 'camera_event.dart';
@@ -35,29 +32,4 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
       },
     );
   }
-
-  // resizeImage(XFile xf) async {
-  //   await (IMG.Command()
-  //         ..decodeJpgFile(xf.path)
-  //         ..copyResize(width: 256, height: 256)
-  //         ..writeToFile(xf.path))
-  //       .executeThread();
-  // }
-
-  // Future<File> cropImage(XFile xf) async {
-  //   var croppedFile = await ImageCropper.platform.cropImage(
-  //     sourcePath: xf.path,
-  //     aspectRatioPresets: [CropAspectRatioPreset.square],
-  //     uiSettings: [
-  //       AndroidUiSettings(
-  //         toolbarTitle: 'Cropper',
-  //         toolbarColor: Colors.green,
-  //         toolbarWidgetColor: Colors.white,
-  //         initAspectRatio: CropAspectRatioPreset.square,
-  //         lockAspectRatio: true,
-  //       )
-  //     ],
-  //   );
-  //   return File(croppedFile!.path);
-  // }
 }

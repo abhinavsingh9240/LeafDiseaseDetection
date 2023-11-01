@@ -42,6 +42,11 @@ dependencies:
   image:  
   flutter_screenutil: 
   image_picker: 
+  http: 
+  async: ^2.11.0
+  path: ^1.8.3
+  http_parser: ^4.0.2
+  timelines: ^0.1.0
 
 dev_dependencies:
   flutter_test:

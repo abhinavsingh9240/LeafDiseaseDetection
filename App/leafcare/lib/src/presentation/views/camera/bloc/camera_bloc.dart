@@ -32,29 +32,4 @@ class CameraBloc extends Bloc<CameraEvent, CameraState> {
       },
     );
   }
-
-  // resizeImage(XFile xf) async {
-  //   await (IMG.Command()
-  //         ..decodeJpgFile(xf.path)
-  //         ..copyResize(width: 256, height: 256)
-  //         ..writeToFile(xf.path))
-  //       .executeThread();
-  // }
-
-  // Future<File> cropImage(XFile xf) async {
-  //   var croppedFile = await ImageCropper.platform.cropImage(
-  //     sourcePath: xf.path,
-  //     aspectRatioPresets: [CropAspectRatioPreset.square],
-  //     uiSettings: [
-  //       AndroidUiSettings(
-  //         toolbarTitle: 'Cropper',
-  //         toolbarColor: Colors.green,
-  //         toolbarWidgetColor: Colors.white,
-  //         initAspectRatio: CropAspectRatioPreset.square,
-  //         lockAspectRatio: true,
-  //       )
-  //     ],
-  //   );
-  //   return File(croppedFile!.path);
-  // }
 }

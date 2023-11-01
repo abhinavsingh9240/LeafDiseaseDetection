@@ -6,6 +6,8 @@ import 'package:leafcare/src/presentation/views/camera/bloc/camera_bloc.dart';
 import 'package:leafcare/src/presentation/views/camera/camera.dart';
 import 'package:leafcare/src/presentation/views/home/bloc/home_bloc.dart';
 import 'package:leafcare/src/presentation/views/home/home.dart';
+import 'package:leafcare/src/presentation/views/predict/bloc/predict_bloc.dart';
+import 'package:leafcare/src/presentation/views/predict/predict_page.dart';
 import 'package:leafcare/src/utils/constants.dart';
 
 class AppRouter {
@@ -22,6 +24,13 @@ class AppRouter {
           view: const CameraPage(),
           bloc: BlocProvider(
             create: (context) => CameraBloc(),
+          ),
+        ),
+        AppRoute(
+          route: AppRouteStrings.predict,
+          view: const PredictionPage(),
+          bloc: BlocProvider(
+            create: (context) => PredictBloc(),
           ),
         ),
       ];

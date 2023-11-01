@@ -12,15 +12,6 @@ Widget getImage(
       width: 160.w,
       height: 45.h,
       decoration: const BoxDecoration(
-        // gradient: LinearGradient(
-        //   begin: Alignment.topLeft,
-        //   end: Alignment.bottomRight,
-        //   colors: [
-        //     Colors.lightGreen,
-        //     Colors.lightGreen,
-        //     Colors.green,
-        //   ],
-        // ),
         color: Colors.green,
         borderRadius: BorderRadius.all(
           Radius.circular(15),

@@ -18,5 +18,13 @@ from django.urls import path,include
 from . import views
 
 urlpatterns = [
-    path('',views.helloworld,name ='hello world')
+    path('apple',views.apple,name='apple'),
+    path('cherry',views.cherry,name='cherry'),
+    path('corn',views.corn,name='corn'),
+    path('grape',views.grape,name='grape'),
+    path('peach',views.peach,name='peach'),
+    path('pepper',views.pepper,name='pepper'),
+    path('potato',views.potato,name='potato'),
+    path('rice',views.rice,name='rice'),
+    path('strawberry',views.strawberry,name='strawberry'),
 ]

@@ -17,8 +17,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       (event, emit) async {
         XFile? photo = await ImagePicker.platform
             .getImageFromSource(source: ImageSource.gallery);
-        File image = await AppCamera.cropImage(photo!);
-        emit(ImagePickedState(image: image));
+        if (photo != null) {
+          File image = await AppCamera.cropImage(photo);
+          emit(ImagePickedState(image: image));
+        }
       },
     );
   }

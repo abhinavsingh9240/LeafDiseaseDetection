@@ -379,7 +379,12 @@ class _PredictionPageState extends State<PredictionPage> {
         borderRadius: BorderRadius.circular(15),
       ),
       child: const Center(
-        child: Text('Response obtained....'),
+        child: Text(
+          'Response obtained....',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }
@@ -394,7 +399,12 @@ class _PredictionPageState extends State<PredictionPage> {
         borderRadius: BorderRadius.circular(15),
       ),
       child: const Center(
-        child: Text('Waiting for Response....'),
+        child: Text(
+          'Waiting for Response....',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }

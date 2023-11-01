@@ -7,7 +7,7 @@ class AppRouteStrings {
 }
 
 class AppStrings {
-  static String ip = '192.168.1.35';
+  static String ip = '16.16.68.19';
   static String baseUrl = 'http://$ip:8000/api/v1/';
 }
 

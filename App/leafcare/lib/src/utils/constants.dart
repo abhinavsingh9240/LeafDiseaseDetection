@@ -4,10 +4,11 @@ class AppRouteStrings {
   static String home = '/';
   static String camera = '/camera';
   static String predict = '/predict';
+  static String settings = '/settings';
 }
 
 class AppStrings {
-  static String ip = '16.16.68.19';
+  static String ip = '';
   static String baseUrl = 'http://$ip:8000/api/v1/';
 }
 

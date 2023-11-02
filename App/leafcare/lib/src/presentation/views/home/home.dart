@@ -27,9 +27,18 @@ class _HomePageState extends State<HomePage> {
               height: 180.h,
               color: Colors.green,
             ),
-            // drawerButton('Account', Icons.person),
-            drawerButton('Settings', Icons.settings),
-            drawerButton('Feedback', Icons.feedback),
+            drawerButton(
+              'Settings',
+              Icons.settings,
+              () {
+                Navigator.pushNamed(context, AppRouteStrings.settings);
+              },
+            ),
+            drawerButton(
+              'Feedback',
+              Icons.feedback,
+              () {},
+            ),
           ],
         ),
       ),

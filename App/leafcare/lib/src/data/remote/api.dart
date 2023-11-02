@@ -4,11 +4,14 @@ import 'package:http/http.dart';
 import 'package:leafcare/src/utils/constants.dart';
 import 'package:path/path.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
   static getPrediction(String category, File image) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String ip = prefs.getString('IP') ?? '';
+    AppStrings.baseUrl = 'http://$ip:8000/api/v1/';
     Uri url = Uri.parse('${AppStrings.baseUrl}${category.toLowerCase()}');
-    // Map<String, String> headers = {};
     var stream = ByteStream(DelegatingStream.typed(image.openRead()));
     var length = await image.length();
 

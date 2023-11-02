@@ -8,6 +8,8 @@ import 'package:leafcare/src/presentation/views/home/bloc/home_bloc.dart';
 import 'package:leafcare/src/presentation/views/home/home.dart';
 import 'package:leafcare/src/presentation/views/predict/bloc/predict_bloc.dart';
 import 'package:leafcare/src/presentation/views/predict/predict_page.dart';
+import 'package:leafcare/src/presentation/views/settings/bloc/settings_bloc.dart';
+import 'package:leafcare/src/presentation/views/settings/settings_page.dart';
 import 'package:leafcare/src/utils/constants.dart';
 
 class AppRouter {
@@ -33,6 +35,13 @@ class AppRouter {
             create: (context) => PredictBloc(),
           ),
         ),
+        AppRoute(
+          route: AppRouteStrings.settings,
+          view: const SettingsPage(),
+          bloc: BlocProvider(
+            create: (context) => SettingsBloc(),
+          ),
+        )
       ];
 
   static MaterialPageRoute onGenerateRoute(RouteSettings settings) {

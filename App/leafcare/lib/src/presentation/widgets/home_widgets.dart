@@ -36,9 +36,9 @@ Widget getImage(
 
 // Drawer Buttons
 
-Widget drawerButton(String text, IconData icon) {
+Widget drawerButton(String text, IconData icon,void Function() onTap) {
   return GestureDetector(
-    onTap: () {},
+    onTap: onTap,
     child: Container(
       height: 50.h,
       margin: const EdgeInsets.symmetric(horizontal: 20),

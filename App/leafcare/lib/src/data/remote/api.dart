@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class API {
   static getPrediction(String category, File image) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String ip = prefs.getString('IP') ?? '';
+    String ip = '51.20.255.15' ?? '';
     AppStrings.baseUrl = 'http://$ip:8000/api/v1/';
     Uri url = Uri.parse('${AppStrings.baseUrl}${category.toLowerCase()}');
     var stream = ByteStream(DelegatingStream.typed(image.openRead()));
@@ -17,7 +17,7 @@ class API {
 
     var request = MultipartRequest("POST", url);
     request.fields['category'] = category;
-
+    
     var multiPartFile = MultipartFile(
       'file',
       stream,

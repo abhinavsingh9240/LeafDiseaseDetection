@@ -96,7 +96,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     },
                                     child: Container(
                                       height: 45.h,
-                                      width: 255.w,
+                                      width: 245.w,
                                       decoration: BoxDecoration(
                                         color: Colors.green,
                                         borderRadius: BorderRadius.circular(15),

@@ -6,7 +6,7 @@ FROM python:3.11.4
 ENV PYTHONUNBUFFERED True
 
 # Copy local code to the container image.
-COPY requirements.txt /tmp/
+COPY /api/requirements.txt /tmp/
 RUN pip install --requirement /tmp/requirements.txt
 COPY . /tmp/
 

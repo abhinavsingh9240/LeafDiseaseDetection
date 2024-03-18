@@ -1,0 +1,32 @@
+name: Auto-merge pull requests
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get pull request details
+        uses: ${{ runner.tool_ बॉक्स }}/github/rest@v18
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          pull_number: ${{ github.event.number }}
+          owner: ${{ github.repository_owner }}
+      - name: Check merge status
+        run: |
+          github_status=$(curl -X GET -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ owner }}/LeafDiseaseDetection/pulls/${{ github.event.number }}/merges)
+          echo "Merge status: $github_status"
+          if [[ $github_status == *"merged"* ]]; then
+            echo "Pull request already merged."
+            exit 0
+          fi
+      - name: Merge pull request
+        uses: ${{ runner.tool_ बॉक्स }}/github/merge-pull-request@v4
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          owner: ${{ github.repository_owner }}
+          pull_number: ${{ github.event.number }}
+          merge-method: squash

@@ -6,23 +6,13 @@ FROM python:3.11.4
 ENV PYTHONUNBUFFERED True
 
 # Copy local code to the container image.
+
+RUN pip install --upgrade pip
+
+WORKDIR /
+
 COPY /api/requirements.txt /tmp/
 RUN pip install --requirement /tmp/requirements.txt
-COPY . /tmp/
+COPY . .
 
-
-ENV /api /app
-WORKDIR $app
-COPY . ./
-
-RUN ls .
-
-# Install production dependencies.
-# RUN pip install -r $app/requirement.txt
-
-# Run the web service on container startup. Here we use the gunicorn
-# webserver, with one worker process and 8 threads.
-# For environments with multiple CPU cores, increase the number of workers
-# to be equal to the cores available.
-CMD [ "python", "../manage.py runserver 0.0.0.0:8080"]
-# CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 app:app
+CMD [ "python", "/api/manage.py runserver 0.0.0.0:8080"]

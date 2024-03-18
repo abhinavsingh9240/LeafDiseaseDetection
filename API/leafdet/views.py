@@ -8,7 +8,15 @@ import numpy as np
 
 @api_view(["GET"])
 def plantdata(request):
-    return "Hello World"
+    data = fetch_crop_data()
+    return Response(
+        status=status.HTTP_200_OK,
+        data={
+            "status": "success",
+            "data": data,
+        },
+    )
+
 
 
 @api_view(["POST"])
@@ -92,3 +100,44 @@ def loadImage(file):
     input = np.array(input)
     input = input.reshape(input.shape[0], -1)
     return input
+
+
+def fetch_crop_data():
+
+    url = "https://www.allthatgrows.in/blogs/posts/vegetable-growing-season-chart-india"
+
+    try:
+        response = requests.get(url)
+        print(response.status_code)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, "html.parser")
+            table = soup.find("table")
+            if table:
+                crop_data = []
+                headings = [
+                    th.get_text().strip() for th in table.find("thead").find_all("th")
+                ]
+                for row in table.find("tbody").find_all("tr"):
+                    crop = {}
+                    cells = row.find_all("td")
+                    for i in range(len(cells)):
+                        if headings[i] == "Links":
+                            crop[headings[i]] = (
+                                cells[i].find("a")["href"] if cells[i].find("a") else ""
+                            )
+                        else:
+                            crop[headings[i]] = cells[i].get_text().strip()
+                    crop_data.append(crop)
+
+                data = json.dumps(crop_data, indent=4)
+
+                return data
+            else:
+                print("No table found on the page.")
+                return None
+        else:
+            print("Failed to fetch page:", response.status_code)
+            return None
+    except Exception as e:
+        print("Error fetching data:", e)
+        return None

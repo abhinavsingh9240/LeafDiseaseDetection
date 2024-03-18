@@ -9,10 +9,10 @@ ENV PYTHONUNBUFFERED True
 
 RUN pip install --upgrade pip
 
-WORKDIR /
+WORKDIR /api/
 
 COPY /api/requirements.txt /tmp/
 RUN pip install --requirement /tmp/requirements.txt
-COPY . .
+COPY /api .
 
-CMD [ "python", "/api/manage.py runserver 0.0.0.0:8080"]
+CMD [ "python", "manage.py",  "runserver", "0.0.0.0:8080"]

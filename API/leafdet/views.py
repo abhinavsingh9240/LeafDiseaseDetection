@@ -4,6 +4,9 @@ from rest_framework import status
 from joblib import load
 from PIL import Image
 import numpy as np
+import requests 
+from bs4 import BeautifulSoup
+import json
 
 
 @api_view(["GET"])
@@ -108,7 +111,7 @@ def fetch_crop_data():
 
     try:
         response = requests.get(url)
-        print(response.status_code)
+        # print(response.status_code)
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, "html.parser")
             table = soup.find("table")
@@ -128,9 +131,9 @@ def fetch_crop_data():
                         else:
                             crop[headings[i]] = cells[i].get_text().strip()
                     crop_data.append(crop)
-
-                data = json.dumps(crop_data, indent=4)
-
+                
+                data = crop_data
+                print(data)
                 return data
             else:
                 print("No table found on the page.")

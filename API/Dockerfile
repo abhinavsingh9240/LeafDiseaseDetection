@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED True
 
 RUN pip install --upgrade pip
 
-WORKDIR /api
+WORKDIR /API
 
 COPY requirements.txt .
 

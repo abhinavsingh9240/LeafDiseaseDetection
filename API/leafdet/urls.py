@@ -29,4 +29,5 @@ urlpatterns = [
     path("rice", views.rice, name="rice"),
     path("strawberry", views.strawberry, name="strawberry"),
     path("plantdata", views.plantdata, name="plantdata"),
+    path("leafdet",views.leafdet, name='leafdet' )
 ]

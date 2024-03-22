@@ -4,9 +4,11 @@ from rest_framework import status
 from joblib import load
 from PIL import Image
 import numpy as np
-import requests 
+import requests
 from bs4 import BeautifulSoup
 import json
+import tensorflow as tf
+from tensorflow import keras
 
 
 @api_view(["GET"])
@@ -20,6 +22,21 @@ def plantdata(request):
         },
     )
 
+
+@api_view(["POST"])
+def leafdet(request):
+
+    file = request.FILES.get("file")
+    print(file)
+    getDLResult(file)
+
+    return Response(
+        status=status.HTTP_200_OK,
+        data={
+            "status": "success",
+            "data": "Hello World",
+        },
+    )
 
 
 @api_view(["POST"])
@@ -105,6 +122,7 @@ def loadImage(file):
     return input
 
 
+
 def fetch_crop_data():
 
     url = "https://www.allthatgrows.in/blogs/posts/vegetable-growing-season-chart-india"
@@ -131,7 +149,7 @@ def fetch_crop_data():
                         else:
                             crop[headings[i]] = cells[i].get_text().strip()
                     crop_data.append(crop)
-                
+
                 data = crop_data
                 print(data)
                 return data
@@ -144,3 +162,9 @@ def fetch_crop_data():
     except Exception as e:
         print("Error fetching data:", e)
         return None
+
+def getDLResult(file):
+    image = loadImage(file)
+    model = tf.keras.models.load_model('F:\Development\Projects\LeafDiseaseDetection\API\models\EfficientNet-Lite_ModelLeaf.keras')
+    result = model.predict([image])
+    print(result)

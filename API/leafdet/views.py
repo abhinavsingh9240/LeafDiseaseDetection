@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import json
 import tensorflow as tf
 from tensorflow import keras
+import os
 
 
 @api_view(["GET"])
@@ -122,49 +123,21 @@ def loadImage(file):
     return input
 
 
-
 def fetch_crop_data():
+    json_file = 'F:\Development\Projects\LeafDiseaseDetection\API\output.json'
+    # print(json_file)
+    #  "./API/output.json"
+    with open(json_file, "r") as f:
+        data = json.load(f)
+        # print(data)
+        return data
 
-    url = "https://www.allthatgrows.in/blogs/posts/vegetable-growing-season-chart-india"
 
-    try:
-        response = requests.get(url)
-        # print(response.status_code)
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.content, "html.parser")
-            table = soup.find("table")
-            if table:
-                crop_data = []
-                headings = [
-                    th.get_text().strip() for th in table.find("thead").find_all("th")
-                ]
-                for row in table.find("tbody").find_all("tr"):
-                    crop = {}
-                    cells = row.find_all("td")
-                    for i in range(len(cells)):
-                        if headings[i] == "Links":
-                            crop[headings[i]] = (
-                                cells[i].find("a")["href"] if cells[i].find("a") else ""
-                            )
-                        else:
-                            crop[headings[i]] = cells[i].get_text().strip()
-                    crop_data.append(crop)
-
-                data = crop_data
-                print(data)
-                return data
-            else:
-                print("No table found on the page.")
-                return None
-        else:
-            print("Failed to fetch page:", response.status_code)
-            return None
-    except Exception as e:
-        print("Error fetching data:", e)
-        return None
 
 def getDLResult(file):
     image = loadImage(file)
-    model = tf.keras.models.load_model('F:\Development\Projects\LeafDiseaseDetection\API\models\EfficientNet-Lite_ModelLeaf.keras')
+    model = tf.keras.models.load_model(
+        "F:\Development\Projects\LeafDiseaseDetection\API\models\EfficientNet-Lite_ModelLeaf.keras"
+    )
     result = model.predict([image])
     print(result)

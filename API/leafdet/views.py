@@ -1,7 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from joblib import load
 from PIL import Image
 import numpy as np
 import requests
@@ -10,9 +9,8 @@ import json
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import tensorflow as tf
-
-from tensorflow import keras
-
+import keras
+from tensorflow.keras import layers
 
 
 @api_view(["GET"])
@@ -26,6 +24,7 @@ def plantdata(request):
         },
     )
 
+
 @api_view(["GET"])
 def schemes(request):
     data = getSchemesData()
@@ -37,18 +36,19 @@ def schemes(request):
         },
     )
 
+
 @api_view(["POST"])
 def leafdet(request):
 
     file = request.FILES.get("file")
-    print(file)
-    getDLResult(file)
+    result = getDLResult(file)
+    print(result)
 
     return Response(
         status=status.HTTP_200_OK,
         data={
             "status": "success",
-            "data": "Hello World",
+            "data": result,
         },
     )
 
@@ -124,16 +124,22 @@ def getResult(file, model_name):
         },
     )
 
+def channel_shuffle(x, groups):
+    height, width, channels = x.shape.as_list()[1:]
+    channels_per_group = channels // groups
+
+    x = tf.reshape(x, [-1, height, width, groups, channels_per_group])
+    x = tf.transpose(x, [0, 1, 2, 4, 3])
+    x = tf.reshape(x, [-1, height, width, channels])
+
+    return x
 
 def loadImage(file):
-    image = Image.open(file)
-    image = image.resize((224, 224))
-    image = np.array(image)
-    input = []
-    input.append(image)
-    input = np.array(input)
-    input = input.reshape(input.shape[0], -1)
-    return input
+    img = Image.open(file)
+    img = img.resize((256, 256))  # Resize the image to match the input size of the model
+    img = np.array(img) / 255.0  # Normalize pixel values
+    img = np.expand_dims(img, axis=0)  # Add batch dimension
+    return img
 
 
 def fetch_crop_data():
@@ -146,19 +152,42 @@ def fetch_crop_data():
         return data
 
 
+@tf.keras.utils.register_keras_serializable(package="Custom", name="channel_shuffle")
+class ChannelShuffle(layers.Layer):
+    def __init__(self, groups=2, **kwargs):
+        super(ChannelShuffle, self).__init__(**kwargs)
+        self.groups = groups
+
+    def call(self, inputs):
+        return channel_shuffle(inputs, self.groups)
+
+    def get_config(self):
+        config = super(ChannelShuffle, self).get_config()
+        config.update({"groups": self.groups})
+        return config
+
+    @classmethod
+    def from_config(cls, config):
+        return cls(**config)
+
+
 def getDLResult(file):
     image = loadImage(file)
-    model = tf.keras.models.load_model(
-        "F:\Development\Projects\LeafDiseaseDetection\API\models\EfficientNet-Lite_ModelLeaf.keras"
-    )
+
+    with tf.keras.utils.custom_object_scope({"ChannelShuffle": ChannelShuffle}):
+        model = tf.keras.models.load_model(
+            "F:\Development\Projects\LeafDiseaseDetection\API\Shufflenet_Model_Apple.h5"
+        )
     result = model.predict([image])
-    print(result)
+    class_names = ['apple scab', 'black rot', 'cedar apple rust', 'healthy']  # Adjust based on your classes
+    predicted_class = class_names[np.argmax(result)]
+    # print(predicted_class)
+    return predicted_class
 
 
 def getSchemesData():
 
     url = "https://agriwelfare.gov.in/en/Major"
-
 
     # Fetch the webpage content
     response = requests.get(url)
@@ -179,15 +208,13 @@ def getSchemesData():
     # Extract data from each row
     for row in rows:
         row_data = [td.text.strip() for td in row.find_all("td")]
-        links = { a for a in row.find_all("a")} # Extract links
+        links = {a for a in row.find_all("a")}  # Extract links
 
         # Extract PDF links
         pdf_links = [link["href"] for link in links if link["href"].endswith(".pdf")]
 
         # Extract regular links
-        links = {
-            link["href"] for link in links if not link["href"].endswith(".pdf")
-        }
+        links = {link["href"] for link in links if not link["href"].endswith(".pdf")}
 
         pdf_download_links = {}
         regular_links = {}
@@ -205,5 +232,5 @@ def getSchemesData():
 
         row_data[-1] = combined_links  # Replace "DETAILS" with links
         data.append(dict(zip(headings, row_data)))
-    
+
     return data

@@ -264,4 +264,7 @@ def getDLResult(file):
             "disease": result,
         }
     else:
-        return "Leaf not found"
+        return {
+            "leaf": 'Not Found',
+            "disease": 'Not Found', 
+        }

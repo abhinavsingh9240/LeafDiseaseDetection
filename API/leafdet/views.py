@@ -307,6 +307,11 @@ def leafdet(request):
     file = request.FILES.get("file")
     result = getDLResult(file)
 
+    if result["leaf"] == "Not found":
+        return Response(
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
     return Response(
         status=status.HTTP_200_OK,
         data={
@@ -436,6 +441,12 @@ def getDLResult(file):
     else:
         return {
             "leaf": "Not Found",
-            "disease": "Not Found",
+            "disease": {
+                "name": "Not found",
+                "info": "Not found",
+                "cause": "",
+                "cure": "",
+                "products": "",
+            },
             "accuracy": 0,
         }

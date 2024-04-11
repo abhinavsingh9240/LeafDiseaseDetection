@@ -15,7 +15,7 @@ from tensorflow.keras import layers
 
 data = {
     "Leafdet": {
-        "modelPath": "models\Shufflenet_Model_Leaf_Detection.keras",
+        "modelPath": "models/Shufflenet_Model_Leaf_Detection.keras",
         "classes": [
             "Cassava",
             "Rice",
@@ -256,7 +256,7 @@ data = {
         ],
     },
     "Strawberry": {
-        "modelPath": "models\Shufflenet_Model_strawberry.keras",
+        "modelPath": "models/Shufflenet_Model_strawberry.keras",
         "accuracy": 100,
         "classes": [
             {
@@ -341,10 +341,9 @@ def loadImage(file):
 
 
 def fetch_crop_data():
-    json_file = "F:\Development\Projects\LeafDiseaseDetection\API\output.json"
+    json_file = os.path.join(os.getcwd(), "/output.json")
     with open(json_file, "r") as f:
         data = json.load(f)
-
         return data
 
 

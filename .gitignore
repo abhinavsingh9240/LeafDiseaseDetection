@@ -1,5 +1,6 @@
 ./vscode
 API/.venv
+API/db.sqlite3
 =========
 ML_DL_Notebooks/*
 >>>>>>>>> Temporary merge branch 2

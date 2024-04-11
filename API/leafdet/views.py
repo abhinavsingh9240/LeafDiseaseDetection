@@ -341,7 +341,9 @@ def loadImage(file):
 
 
 def fetch_crop_data():
-    json_file = os.path.join(os.getcwd(), "/output.json")
+    cur = os.getcwd()
+    json_file = os.path.join(cur, "output.json")
+    print(json_file)
     with open(json_file, "r") as f:
         data = json.load(f)
         return data

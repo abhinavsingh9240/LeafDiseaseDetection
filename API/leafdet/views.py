@@ -441,7 +441,7 @@ def getDLResult(file):
         }
     else:
         return {
-            "leaf": "Not Found",
+            "leaf": predicted_class,
             "disease": {
                 "name": "Not found",
                 "info": "Not found",
